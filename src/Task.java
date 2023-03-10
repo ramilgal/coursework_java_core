@@ -16,13 +16,13 @@ public abstract class Task {
         return true;
     }
 
-    public Task(String title, Type type, String description, LocalDateTime dateTime)
+    public Task(String title, Type type, String description, LocalDateTime localDateTime)
             throws IncorrectArgumentException {
         this.title = ValidateInput.checkInputString(title);
         this.type = type;
         this.description = ValidateInput.checkInputString(description);
-        this.id = counter++;
-        this.dateTime = dateTime;
+        id = counter++;
+        this.dateTime = localDateTime;
         this.deleted = false;
     }
 
@@ -81,5 +81,14 @@ public abstract class Task {
     @Override
     public int hashCode() {
         return Objects.hash(title, type, description, id, dateTime, deleted);
+    }
+
+    @Override
+    public String toString() {
+        return "Задача ID: " + id +
+                " , название: " + title +
+                ", тип: " + type +
+                ", описание: " + description +
+                ", дата: " + dateTime;
     }
 }

@@ -1,4 +1,8 @@
     public enum Type {
-    WORK,
-    PERSONAL;
+    WORK("0"),
+    PERSONAL("1");
+
+        Type(String s) {
+
+        }
     }

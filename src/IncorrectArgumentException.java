@@ -5,7 +5,7 @@
         }
 
         public IncorrectArgumentException(String message) {
-            super(message);
+            super("Неверный ввод");
         }
     }
 
