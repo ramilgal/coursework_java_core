@@ -1,10 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
-    static Scanner scanner = new Scanner(System.in);
-
-    public static void main(String[] args) throws IncorrectArgumentException {
-        try {
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
             label:
             while (true) {
                 System.out.println("Меню. Выберите пункт:");
@@ -37,9 +35,6 @@ public class Main {
                 System.out.println("Выберите верный пункт!");
             }
         }
-        } catch (IncorrectArgumentException e) {
-            throw new IncorrectArgumentException("Неверный пункт");
         }
-
     }
 }

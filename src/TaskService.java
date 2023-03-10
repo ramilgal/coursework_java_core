@@ -18,10 +18,10 @@ public class TaskService {
             Type type = Type.values()[scanner.nextInt()];
             System.out.println("Повторяемость задачи: 1 - разовая, 2 - ежедневная, 3 - еженедельная, 4 - ежемесячная, 5 - ежегодная :");
             int repeat = scanner.nextInt();
-            System.out.println("Дата в формате dd.MM.yyyy время HH:mm");
+            System.out.println("Дата и время в формате dd.MM.yyyy HH:mm");
             scanner.nextLine();
             addEvent(scanner, title, description, type, repeat);
-            System.out.println("Выход (enter): ");
+            System.out.println("Выход - enter: ");
             scanner.nextLine();
         } catch (IncorrectArgumentException e) {
             System.out.println(e.getMessage());
@@ -31,10 +31,10 @@ public class TaskService {
     private static void addEvent(Scanner scanner, String title, String description, Type type, int repeat) {
         try {
             LocalDateTime eventDate = LocalDateTime.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
-            Task task = null;
+            Task task;
             try {
                 task = createTask(repeat, title, description, type, eventDate);
-                System.out.println(task + " задача создана");
+                System.out.println(task + " - задача создана");
             } catch (IncorrectArgumentException e) {
                 System.out.println(e.getMessage());
             }
@@ -83,7 +83,7 @@ public class TaskService {
             printCurrentTasks();
             int id = scanner.nextInt();
             if (!currentTasks.containsKey(id)) {
-                throw new IncorrectArgumentException("Указанная задача не найдена");
+                throw new TaskNotFoundException("Указанная задача не найдена");
             }
             System.out.println("Редактировать: 0 - Название, 1 - Описание, 2 - Тип задачи, 3 - дата");
             int choice = scanner.nextInt();
@@ -116,12 +116,12 @@ public class TaskService {
             }
 
 
-        } catch (IncorrectArgumentException e) {
-            System.out.println("Такой задачи нет");
+        } catch (TaskNotFoundException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public static void deleteTask(Scanner scanner) throws IncorrectArgumentException {
+    public static void deleteTask(Scanner scanner)  {
         System.out.println("Список всех задач: ");
         printCurrentTasks();
         try {
@@ -154,7 +154,7 @@ public class TaskService {
         System.out.println("enter - выход");
     }
 
-    public static List<Task> findTasksOnDay(LocalDate date) {
+    private static List<Task> findTasksOnDay(LocalDate date) {
         List<Task> tasks = new ArrayList<>();
         for (Task task : currentTasks.values()) {
             if (task.checkRecurrence(date.atStartOfDay())) {
