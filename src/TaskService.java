@@ -79,36 +79,36 @@ public class TaskService {
     public static void editTask(Scanner scanner) {
 
         try {
-            System.out.println("Редактирование задачи по ID (введите ID):");
+            System.out.println("Редактирование задачи по ID из списка (введите ID):");
             printCurrentTasks();
             int id = scanner.nextInt();
             if (!currentTasks.containsKey(id)) {
                 throw new TaskNotFoundException("Указанная задача не найдена");
             }
-            System.out.println("Редактировать: 0 - Название, 1 - Описание, 2 - Тип задачи, 3 - дата");
+            System.out.println("Редактировать: 0 - Название, 1 - Описание, 2 - Тип задачи, 3 - Дата");
             int choice = scanner.nextInt();
             switch (choice) {
                 case 0->{
                     scanner.nextLine();
-                    System.out.println("Введите название: ");
+                    System.out.println("Введите название: (или Enter -для выхода в главное меню)");
                     String title = scanner.nextLine();
                     Task task = currentTasks.get(id);
                     task.setTitle(title);}
                 case 1->{
                     scanner.nextLine();
-                    System.out.println("Введите описание: ");
+                    System.out.println("Введите описание: (или Enter -для выхода в главное меню)");
                     String description = scanner.nextLine();
                     Task task1 = currentTasks.get(id);
                     task1.setDescription(description);}
                 case 2->{
                     scanner.nextLine();
-                    System.out.println("Введите тип задачи WORK или PRIVATE: ");
+                    System.out.println("Введите тип задачи WORK или PRIVATE: (или Enter -для выхода в главное меню)");
                     Type type = Type.valueOf(scanner.nextLine());
                     Task task2 = currentTasks.get(id);
                     task2.setType(type);}
                 case 3->{
                     scanner.nextLine();
-                    System.out.println("Введите дату в формате dd.MM.yyyy время HH:mm");
+                    System.out.println("Введите дату в формате dd.MM.yyyy время HH:mm (или Enter -для выхода в главное меню)");
                     LocalDateTime dateTime = LocalDateTime.parse(scanner.nextLine(),
                             DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
                     Task task3 = currentTasks.get(id);
@@ -130,9 +130,9 @@ public class TaskService {
             if (currentTasks.containsKey(id)) {
                 currentTasks.remove(id);
                 System.out.println("Задача ID: " + id + " удалена");
-            } else throw new IncorrectArgumentException();
+            } else throw new TaskNotFoundException();
 
-        } catch (IncorrectArgumentException e) {
+        } catch (TaskNotFoundException e) {
             e.printStackTrace();
             System.out.println("Указанная задача не найдена");
         }
@@ -150,6 +150,7 @@ public class TaskService {
             }
         } catch (DateTimeParseException e) {
             System.out.println("Введите правильный формат dd.MM.yyyy");
+            getTaskOnDay(scanner);
         } scanner.nextLine();
         System.out.println("enter - выход");
     }
