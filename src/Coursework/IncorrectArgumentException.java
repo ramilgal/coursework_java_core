@@ -1,5 +1,6 @@
+package Coursework;
 
-    public class IncorrectArgumentException extends Exception {
+public class IncorrectArgumentException extends Exception {
         public IncorrectArgumentException() {
             super();
         }

@@ -1,3 +1,5 @@
+package Coursework;
+
 import java.util.Scanner;
 
 public class Main {

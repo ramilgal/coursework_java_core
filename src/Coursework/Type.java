@@ -1,4 +1,6 @@
-    public enum Type {
+package Coursework;
+
+public enum Type {
     WORK("0"),
     PERSONAL("1");
 
